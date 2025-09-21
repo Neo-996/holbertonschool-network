@@ -1,18 +1,4 @@
 #!/usr/bin/env bash
-# Display listening TCP/UDP sockets with PID/program name (Ubuntu 22.04)
-set -euo pipefail
+# This script print the ports  open and the programs associated to this ports.
 
-if [ "${EUID:-$(id -u)}" -ne 0 ]; then
-  exec sudo -E bash "$0" "$@"
-fi
-
-if command -v ss >/dev/null 2>&1; then
-  echo "Active Internet connections (only servers)"
-  ss -lntup
-elif command -v netstat >/dev/null 2>&1; then
-  netstat -lntup
-else
-  echo "Error: neither 'ss' nor 'netstat' is installed." >&2
-  echo "Install 'iproute2' (for ss) or 'net-tools' (for netstat) and try again." >&2
-  exit 1
-fi
+netstat -tulnp
